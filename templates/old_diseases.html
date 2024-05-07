@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="/static/css/layui.css"  media="all">
+    <script src="/static/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<!-- templates/table.html -->
+<table class="layui-table" lay-size="sm">
+  <colgroup>
+    <col width="100">
+    <col width="100">
+      <col width="100">
+      <col width="100">
+    <col>
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Medical Record ID</th>
+      <th>Record Time</th>
+      <th>Record Department</th>
+      <th>Attending Physician</th>
+      <th>Medical Description</th>
+
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in data %}
+    <tr>
+  <td>{{ order.medical_record_id }}</td>
+  <td>{{ order.record_time }}</td>
+  <td>{{ order.record_department }}</td>
+  <td>{{ order.staff_name }}</td>
+  <td style="white-space: normal;">{{ order.medical_descripition}}</td>
+
+   </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+<script>
+
+
+</script>
+
+</body>
+</html>

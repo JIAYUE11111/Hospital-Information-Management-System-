@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登录医疗信息系统</title>
+    <link rel="stylesheet" href="/static/css/layui.css">
+</head>
+<body>
+<script>
+		// 判断 flag 的值并弹出相应的消息框
+		if ({{flag}} == 0.5) {
+			alert('密码错误,请重新输入！');
+		}
+	</script>
+<div style="width: 500px;height: 400px;margin: 100px auto;">
+<form class="layui-form layui-form-pane" action="/new_information" method="POST">
+  <div class="layui-form-item">
+    <label class="layui-form-label">职工id</label>
+    <div class="layui-input-block">
+      <input type="text" name="title" autocomplete="off" placeholder="请输入您的id" lay-verify="required" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">职工姓名</label>
+    <div class="layui-input-block">
+      <input type="text" name="username" autocomplete="off" placeholder="请输入您的姓名" lay-verify="required" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">职工电话</label>
+    <div class="layui-input-block">
+      <input type="text" name="usertelephone" autocomplete="off" placeholder="请输入您的电话" lay-verify="required" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">旧密码框</label>
+    <div class="layui-input-inline">
+      <input type="password" name="oldpassword" placeholder="请输入您的旧密码" lay-verify="required" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+    <div class="layui-form-item">
+    <label class="layui-form-label">新密码框</label>
+    <div class="layui-input-inline">
+      <input type="password" name="newpassword" placeholder="请输入您想要修改的新密码" lay-verify="required" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <button class="layui-btn" lay-submit lay-filter="demo2" id="makesure" >确认</button>
+    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+  </div>
+</form>
+</div>
+
+<script src="/static/layui.js"></script>
+<script>
+layui.use(['form','layer','util'], function(){
+  var form = layui.form;
+  var layer = layui.layer;
+  var util = layui.util;
+  // 点击按钮触发弹出层和跳转
+});
+if ({{flag}} == 0) {
+			alert('职工电话已修改！职工密码输入错误,请修改密码失败！');
+		}
+if ({{flag}} == 1) {
+			alert('职工电话已修改！职工密码已修改！');
+		}
+
+
+</script>
+</body>
+</html>

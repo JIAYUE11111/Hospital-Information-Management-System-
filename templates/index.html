@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登录医疗信息系统</title>
+    <link rel="stylesheet" href="/static/css/layui.css">
+</head>
+<body>
+<script>
+		// 判断 flag 的值并弹出相应的消息框
+		if ({{flag}} == 0.5) {
+			alert('密码错误,请重新输入！');
+		}
+	</script>
+<div style="width: 500px;height: 400px;margin: 100px auto;">
+<form class="layui-form layui-form-pane" action="/index" method="POST">
+  <div class="layui-form-item">
+    <label class="layui-form-label">输入框</label>
+    <div class="layui-input-block">
+      <input type="text" name="title" autocomplete="off" placeholder="请输入您的职工号" lay-verify="required" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">密码框</label>
+    <div class="layui-input-inline">
+      <input type="password" name="password" placeholder="请输入" lay-verify="required" autocomplete="off" class="layui-input">
+    </div>
+    <div class="layui-form-mid layui-text-em">请务必填写您的职工号</div>
+  </div>
+  <div class="layui-form-item">
+    <button class="layui-btn" lay-submit lay-filter="demo2">确认</button>
+    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+  </div>
+</form>
+</div>
+
+<script src="/static/layui.js"></script>
+<script>
+layui.use(['form'], function(){
+  var form = layui.form;
+  var layer = layui.layer;
+  // 提交事件
+  {#form.on('submit(demo2)', function(data){#}
+  {#  var field = data.field; // 获取表单字段值#}
+  {#  // 显示填写结果，仅作演示用#}
+  {#  layer.alert(JSON.stringify(field), {#}
+  {#    title: '当前填写的字段值'#}
+  {#  });#}
+  {#  // 此处可执行 Ajax 等操作#}
+  {#  // …#}
+  {#  return false; // 阻止默认 form 跳转#}
+
+});
+
+</script>
+</body>
+</html>

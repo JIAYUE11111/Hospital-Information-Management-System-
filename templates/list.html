@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+    <link rel="stylesheet" href="/static/css/layui.css" media="all">
+    <script src="/static/layui.js" charset="utf-8"></script>
+</head>
+<body>
+
+
+<form class="layui-form" action="" id="searchForm">
+    <div class="layui-form-item">
+    <br>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">病人姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="patient_name" id="patient_name"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <a  onclick="doSearch()" class="layui-btn layui-btn-radius" >搜索</a>
+            <button type="reset" class="layui-btn  layui-btn-radius ">重置</button>
+        </div>
+    </div>
+</form>
+
+
+
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+
+
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="find">查看</a>
+
+</script>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加病人</button>
+    </div>
+</script>
+
+<script>
+    var $ ,layer,table;
+    layui.use(['table','form'], function(){
+        table=layui.table;
+        var form = layui.form;
+         $=layui.jquery;
+        layer=layui.layer;
+
+        table.render({
+            elem: '#test'
+            ,url:'/order/listJson'
+            ,toolbar: '#toolbarDemo'
+            ,title: '病人信息表'
+            ,totalRow: true
+            ,where:{}
+            ,cols: [
+                [
+
+              {field:'patient_id', title:'病人编码', width:180}
+                ,{field:'patient_name', title:'姓名', width:180}
+                ,{field:'genter', title:'性别', width:180,templet: function(d){
+        if(d.genter ===1 ){
+          return '<span style="color: blue">♂</span>';
+        } else {
+          return '<span style="color: pink">♀</span>';
+        }
+      }}
+                ,{field:'year_old', title:'年龄', width:180}
+                ,{field:'telephone', title:'电话', width:180}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:180}
+            ]
+            ]
+            ,page: true
+            ,limit:10
+            ,limits:[10,11,12,13]
+            ,id:'orderTable',
+           done:function (res,curr,count){
+                setTimeout(function (){
+                    table.resize('orderTable');
+                },50);
+           }
+        });
+
+            table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+
+                case 'add':
+                   parent.layer.open({
+                        type: 2
+                        ,offset:'auto'
+                        ,title:'添加病人'
+                        ,content:'/order/add'
+                        ,area:['1000px','600px']
+                        ,btn:'关闭全部'
+                        ,btnAlign:'c'
+                        ,yes:function () {
+                           parent.layer.closeAll();
+                        }
+                    });
+                    break;
+            };
+        });
+
+        //监听工具条
+        table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var id = obj.data.patient_id; //获取订单ID
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+
+
+            if(layEvent === 'find'){ //编辑
+                //do something
+
+            parent.layer.open({
+           type: 2
+           ,offset:'auto'
+           ,title:'就诊记录'
+           ,content:'/old_diseases?patient_id='+id
+           ,area:['1000px','600px']
+           ,btn:'关闭全部'
+           ,btnAlign:'c'
+           ,yes:function () {
+               parent.layer.closeAll();
+           }
+       });
+
+            }
+        });
+
+
+    });
+
+    function doSearch() {
+        //通过jquery获取参数的值
+        var patient_name=$("#patient_name").val().trim();
+        table.reload('orderTable', {
+            where: {
+                patient_name:patient_name,
+            },page: {
+                curr:1
+            }
+        });
+    }
+
+</script>
+
+</body>
+</html>
